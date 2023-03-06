@@ -1,0 +1,32 @@
+.form-label {
+	font-weight: 600;
+}
+
+.form-control {
+	color: white;
+	background-color: rgba(255, 255, 255, 0.25);
+	background-clip: padding-box;
+	border: 1px solid transparent;
+	appearance: none;
+	border-radius: 0.6rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+		background-color 0.2s;
+
+	&::placeholder {
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.35);
+		transition: all 0.2s;
+	}
+
+	&:focus {
+		background-color: rgba(255, 255, 255, 0.35);
+		border-color: rgba(255, 255, 255, 0.5);
+		outline: 0;
+		box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+		transition: all 0.2s;
+		color: white;
+	}
+}

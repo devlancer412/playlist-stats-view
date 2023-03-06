@@ -1,0 +1,59 @@
+@import "@styles/variables.module.scss";
+
+.header {
+	background-color: var(--primary-dark-bg);
+
+	height: $header-height;
+	width: 100%;
+
+	z-index: 100;
+
+	.navbar-brand img {
+		height: 2.5rem;
+	}
+
+	h1 {
+		font-size: 1.1rem;
+		font-weight: 400;
+		font-family: Oswald;
+		margin: 0;
+		text-align: right;
+	}
+
+	.btn {
+		--bs-btn-padding-x: 1.5rem !important;
+		&:nth-of-type(2) {
+			color: var(--text-color);
+		}
+
+		&:first-of-type {
+			padding: 0;
+		}
+
+		img {
+			width: 1.5rem;
+			height: 1.5rem;
+
+			filter: brightness(0) invert(1);
+		}
+	}
+
+	@media (max-width: 1199px) {
+		.container-xl {
+			padding-left: 3rem;
+			padding-right: 3rem;
+		}
+	}
+
+	@media (max-width: 932px) {
+		height: $mobile-header-height;
+
+		.navbar-brand img {
+			height: 2rem;
+		}
+		.container-xl {
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+	}
+}

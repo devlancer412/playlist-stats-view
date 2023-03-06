@@ -1,0 +1,23 @@
+.pill-button {
+	color: white;
+	background-color: var(--primary-bright-color);
+	border-radius: 2rem;
+	font-weight: 600;
+
+	&:hover:not(:disabled) {
+		// darken background color
+		background-color: var(--primary-bright-color-darken-10);
+		transition: all 0.2s;
+	}
+
+	&:active:not(:disabled) {
+		// darken background color
+		background-color: var(--primary-bright-color-darken-20) !important;
+		border-color: white !important;
+		transition: all 0.2s;
+	}
+
+	&:disabled {
+		cursor: default;
+	}
+}

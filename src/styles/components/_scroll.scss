@@ -1,0 +1,27 @@
+$scrollbar-width: 6px;
+$scrollbar-padding: 10px;
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #707070;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--primary-dark-bg);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--primary-dark-color);
+}
+
+@media (max-width: 932px) {
+	::-webkit-scrollbar {
+		display: none;
+	}
+}
+// }

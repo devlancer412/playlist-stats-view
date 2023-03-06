@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@api/*": ["api/*"],
+      "@assets/*": ["assets/*"],
+      "@context/*": ["context/*"],
+      "@data/*": ["data/*"],
+      "@layout/*": ["layout/*"],
+      "@components/*": ["components/*"],
+      "@routes/*": ["routes/*"],
+      "@views/*": ["views/*"],
+      "@services/*": ["services/*"],
+      "@styles/*": ["styles/*"]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+$header-height: 5rem;
+$mobile-header-height: 4rem;
+$content-height: calc(100vh - $header-height);
+$mobile-content-height: calc(100vh - $mobile-header-height);
+$playerbar-height: 8rem;
+
+:export {
+	headerHeight: $header-height;
+	contentHeight: $content-height;
+	playerbarHeight: $playerbar-height;
+	mobileHeaderHeight: $mobile-header-height;
+	mobileContentHeight: $mobile-content-height;
+}
