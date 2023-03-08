@@ -2,6 +2,9 @@ import { useContext, useEffect, useRef, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
+import { BBox, GeoJsonProperties } from "geojson";
+import * as Supercluster from "supercluster";
+import useSuperCluster from 'use-supercluster';
 
 import { Helmet } from 'react-helmet';
 
@@ -30,43 +33,23 @@ const option = {
 };
 
 const PlaylistStatsPage = () => {
+  const [bounds, setBounds] = useState<any[4]>();
+  const [zoom, setZoom] = useState(10);
   const { playlistStats } = useContext<PlaylistStatsContextType | null>(
     PlaylistStatsContext
   ) as PlaylistStatsContextType;
-  const [center, setCenter] = useState<PointType | undefined>(
-    playlistStats?.center
-  );
-  const [zoom, setZoom] = useState<number>(0);
 
   const { slug, fileId } = useParams<{ slug: string; fileId: string }>();
 
-  const map = useMemo(
-    () => (
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: '' }}
-        defaultCenter={playlistStats?.center}
-        defaultZoom={11}
-        center={center}
-        zoom={zoom}
-        onChange={({ center, zoom }) => {
-          setCenter(center);
-          setZoom(zoom);
-        }}
-      >
-        {(playlistStats?.listeners ?? []).map((position, index) => (
-          <SimpleMarker
-            key={index}
-            lat={position.lat}
-            lng={position.lng}
-            count={1}
-            name='My Marker'
-            color='blue'
-          />
-        ))}
-      </GoogleMapReact>
-    ),
-    [center, playlistStats?.center, playlistStats?.listeners, zoom]
-  );
+  const { clusters } = useSuperCluster({
+    points: playlistStats?.listeners ?? [],
+    bounds,
+    zoom,
+    options: {
+      radius: 75,
+      maxZoom: 25
+    }
+  });
 
   return (
     <main className='playlist-stats-page'>
@@ -76,7 +59,42 @@ const PlaylistStatsPage = () => {
           <span>{'>'}</span>
           <a href=''>{fileId}</a>
         </nav>
-        <div className='map-container'>{map}</div>
+        <div className='map-container'>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: '' }}
+            defaultCenter={playlistStats?.center}
+            defaultZoom={10}
+            yesIWantToUseGoogleMapApiInternals
+            onChange={({ zoom, bounds }) => {
+              setZoom(zoom);
+              setBounds([
+                bounds.nw.lng,
+                bounds.se.lat,
+                bounds.se.lng,
+                bounds.nw.lat,
+              ]);
+            }}
+          >
+            {
+              clusters.map((cluster, index) => {
+                const [longitude, latitude] = cluster.geometry.coordinates;
+                const { cluster: isCluster, point_count: pointCount } =
+                  cluster.properties as any;
+
+                return (
+                  <SimpleMarker
+                    key={index}
+                    lat={latitude}
+                    lng={longitude}
+                    count={isCluster ? pointCount : 1}
+                    name='My Marker'
+                    color='blue'
+                  />
+                );
+              })
+            }
+          </GoogleMapReact>
+        </div>
       </Container>
     </main>
   );

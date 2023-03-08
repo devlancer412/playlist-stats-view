@@ -19,7 +19,16 @@ const mockedViewPlaylistStats = async (
 				slug,
 				fileId,
 				center: defaultPosition,
-				listeners: markersData,
+				listeners: markersData.map((point) => {
+					return {
+						type: "Feature" as const,
+						properties: {
+							cluster: false,
+							category: "playerlist-stats"
+						},
+						geometry: { type: "Point" as const, coordinates: [point.lng, point.lat] }
+					}
+				}),
 				displayMode: "playlist"
 			},
 		});

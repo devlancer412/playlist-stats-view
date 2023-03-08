@@ -13,11 +13,15 @@ interface PointType {
 	lng: number
 }
 
+interface ClusterType extends PointType {
+	count: number
+}
+
 interface PlaylistStatsType {
 	slug: string;
 	fileId: number;
 	center: PointType;
-	listeners: PointType[];
+	listeners: PointFeature<AnyProps>[];
 	displayMode?: "playlist" | "drip"
 }
 
